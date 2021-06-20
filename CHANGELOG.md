@@ -4,7 +4,7 @@
 * Feat: Add Culture Context (#491)
 * Feat: Capture failed requests as event (#473)
 * Feat: `beforeSend` callback accepts async code (#494)
-* Feat: Add support for attachments (#494)
+* Feat: Add support for attachments (#505)
 
 ## Breaking Changes:
 
