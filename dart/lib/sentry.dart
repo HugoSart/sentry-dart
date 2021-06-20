@@ -23,3 +23,4 @@ export 'src/integration.dart';
 export 'src/event_processor.dart';
 export 'src/http_client/sentry_http_client.dart';
 export 'src/scope_extensions/scope_extensions.dart';
+export 'src/user_feedback.dart';

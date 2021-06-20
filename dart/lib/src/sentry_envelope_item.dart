@@ -4,6 +4,7 @@ import '../attachment.dart';
 import 'sentry_item_type.dart';
 import 'protocol/sentry_event.dart';
 import 'sentry_envelope_item_header.dart';
+import 'user_feedback.dart';
 
 /// Item holding header information and JSON encoded data.
 class SentryEnvelopeItem {
@@ -18,6 +19,24 @@ class SentryEnvelopeItem {
       attachmentType: attachment.type.toSentryIdentifier(),
     );
     return SentryEnvelopeItem(header, () async => attachment.content);
+  }
+
+  factory SentryEnvelopeItem.fromUserFeedback(UserFeedback feedback) {
+    final cachedItem = _CachedItem(() async {
+      final jsonEncoded = jsonEncode(feedback.toJson());
+      return utf8.encode(jsonEncoded);
+    });
+
+    final getLength = () async {
+      return (await cachedItem.getData()).length;
+    };
+
+    final header = SentryEnvelopeItemHeader(
+      SentryItemType.userFeedback,
+      getLength,
+      contentType: 'application/json',
+    );
+    return SentryEnvelopeItem(header, cachedItem.getData);
   }
 
   /// Create an `SentryEnvelopeItem` which holds the `SentyEvent` data.
